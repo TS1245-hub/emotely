@@ -45,8 +45,7 @@ export default function ExtensionPage() {
       <div className="text-center mb-12">
         <p className="text-sm text-zinc-500 mb-2">Le bouton ne fonctionne pas ?</p>
         <a 
-          href={`${BACKEND_URL}/remotely-extension.zip`}
-          download="remotely-extension.zip"
+          href={`${BACKEND_URL}/api/download/extension`}
           className="text-indigo-400 hover:text-indigo-300 underline text-sm"
         >
           Lien direct de téléchargement
