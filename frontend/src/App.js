@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import Layout from "./components/Layout";
-import HomePage from "./pages/HomePage";
-import FavoritesPage from "./pages/FavoritesPage";
+import DashboardPage from "./pages/DashboardPage";
+import KanbanPage from "./pages/KanbanPage";
 import AlertsPage from "./pages/AlertsPage";
-import JobDetailPage from "./pages/JobDetailPage";
+import ApplicationDetailPage from "./pages/ApplicationDetailPage";
 import "@/App.css";
 
 function App() {
@@ -24,10 +24,10 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="favoris" element={<FavoritesPage />} />
+            <Route index element={<DashboardPage />} />
+            <Route path="kanban" element={<KanbanPage />} />
             <Route path="alertes" element={<AlertsPage />} />
-            <Route path="job/:id" element={<JobDetailPage />} />
+            <Route path="application/:id" element={<ApplicationDetailPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

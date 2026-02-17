@@ -1,7 +1,12 @@
 import { Outlet, NavLink } from "react-router-dom";
-import { Search, Heart, Bell, Home, Briefcase } from "lucide-react";
+import { LayoutDashboard, Kanban, Bell, Briefcase, Plus, Download } from "lucide-react";
+import { Button } from "../components/ui/button";
+import { useState } from "react";
+import AddApplicationDialog from "./AddApplicationDialog";
 
 export default function Layout() {
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-50">
       {/* Header */}
@@ -20,6 +25,9 @@ export default function Layout() {
               <span className="text-xl font-bold tracking-tight font-[Manrope]">
                 Remotely
               </span>
+              <span className="hidden sm:inline text-xs text-zinc-500 ml-2 px-2 py-0.5 bg-zinc-800 rounded-full">
+                Tracker
+              </span>
             </NavLink>
 
             {/* Navigation */}
@@ -34,14 +42,14 @@ export default function Layout() {
                       : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50"
                   }`
                 }
-                data-testid="nav-home"
+                data-testid="nav-dashboard"
               >
-                <Home className="w-4 h-4" />
-                <span className="hidden sm:inline text-sm font-medium">Accueil</span>
+                <LayoutDashboard className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm font-medium">Dashboard</span>
               </NavLink>
 
               <NavLink
-                to="/favoris"
+                to="/kanban"
                 className={({ isActive }) =>
                   `flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                     isActive
@@ -49,10 +57,10 @@ export default function Layout() {
                       : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50"
                   }`
                 }
-                data-testid="nav-favorites"
+                data-testid="nav-kanban"
               >
-                <Heart className="w-4 h-4" />
-                <span className="hidden sm:inline text-sm font-medium">Favoris</span>
+                <Kanban className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm font-medium">Kanban</span>
               </NavLink>
 
               <NavLink
@@ -69,6 +77,16 @@ export default function Layout() {
                 <Bell className="w-4 h-4" />
                 <span className="hidden sm:inline text-sm font-medium">Alertes</span>
               </NavLink>
+
+              {/* Add Application Button */}
+              <Button
+                onClick={() => setIsAddDialogOpen(true)}
+                className="ml-2 bg-indigo-600 hover:bg-indigo-700 text-white"
+                data-testid="add-application-btn"
+              >
+                <Plus className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Ajouter</span>
+              </Button>
             </nav>
           </div>
         </div>
@@ -79,6 +97,12 @@ export default function Layout() {
         <Outlet />
       </main>
 
+      {/* Add Application Dialog */}
+      <AddApplicationDialog 
+        open={isAddDialogOpen} 
+        onOpenChange={setIsAddDialogOpen}
+      />
+
       {/* Footer */}
       <footer className="border-t border-zinc-800 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -88,12 +112,19 @@ export default function Layout() {
                 <Briefcase className="w-3 h-3 text-white" />
               </div>
               <span className="text-sm text-zinc-500">
-                Remotely - Emplois 100% Télétravail
+                Remotely - Suivi de candidatures télétravail
               </span>
             </div>
-            <p className="text-xs text-zinc-600">
-              Trouvez votre prochain emploi remote
-            </p>
+            <div className="flex items-center gap-4">
+              <a 
+                href="/extension/remotely-extension.zip" 
+                download
+                className="flex items-center gap-2 text-xs text-zinc-500 hover:text-indigo-400 transition-colors"
+              >
+                <Download className="w-3 h-3" />
+                Extension Chrome
+              </a>
+            </div>
           </div>
         </div>
       </footer>
