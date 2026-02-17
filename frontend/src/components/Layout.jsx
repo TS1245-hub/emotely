@@ -117,8 +117,8 @@ export default function Layout() {
             </div>
             <div className="flex items-center gap-4">
               <a 
-                href="/extension/remotely-extension.zip" 
-                download
+                href="/remotely-extension.zip" 
+                download="remotely-extension.zip"
                 className="flex items-center gap-2 text-xs text-zinc-500 hover:text-indigo-400 transition-colors"
               >
                 <Download className="w-3 h-3" />
