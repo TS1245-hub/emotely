@@ -1,7 +1,7 @@
-# Remotely - Application de Recherche d'Emploi en Télétravail
+# Remotely - Tracker de Candidatures Télétravail
 
 ## Résumé
-Application web de recherche d'emploi spécialisée dans les postes 100% télétravail, avec interface en français et thème sombre moderne.
+Application web personnelle de suivi de candidatures pour emplois 100% télétravail, avec extension Chrome intelligente pour capturer les offres en un clic depuis les principaux sites d'emploi.
 
 ## Date de création
 17 janvier 2026
@@ -10,73 +10,81 @@ Application web de recherche d'emploi spécialisée dans les postes 100% télét
 - **Frontend**: React 19, Tailwind CSS, Shadcn/UI, Framer Motion
 - **Backend**: FastAPI (Python)
 - **Base de données**: MongoDB
+- **Extension**: Chrome Extension (Manifest V3)
 - **Design**: Thème sombre Zinc-950, accents Indigo
 
-## Fonctionnalités Implémentées (MVP)
+## Fonctionnalités Implémentées
 
-### ✅ Page d'accueil
-- Barre de recherche avec suggestions
-- Liste des offres d'emploi (12 offres mock)
-- Affichage des métadonnées (entreprise, localisation, salaire, tags)
+### ✅ Dashboard Principal
+- Statistiques en temps réel (Total, En cours, Entretiens, Cette semaine)
+- Liste des candidatures avec recherche et filtres
+- Changement de statut rapide via menu dropdown
+- Liens vers les offres originales
 
-### ✅ Système de filtres
-- Type de contrat (CDI, CDD, Freelance, Stage)
-- Localisation (France, Europe, Mondial, Francophone)
-- Salaire minimum (slider 0-100k€)
+### ✅ Vue Kanban
+- 6 colonnes de statut (À postuler, Postulé, Entretien, Offre, Accepté, Refusé)
+- Drag & drop pour changer le statut
+- Vue visuelle du pipeline de candidatures
 
-### ✅ Page détail d'une offre
-- Description complète
-- Compétences requises
-- Boutons: Postuler, Favoris, Partager
+### ✅ Extension Chrome Intelligente
+- Extraction automatique depuis: LinkedIn, Indeed, Welcome to the Jungle, RemoteOK, Talent.io, Glassdoor
+- Détection du titre, entreprise, localisation, salaire
+- Sauvegarde en un clic vers le dashboard
+- Saisie manuelle pour sites non supportés
 
-### ✅ Système de favoris
-- Ajouter/retirer des favoris
-- Page dédiée aux favoris sauvegardés
-- Stockage persistant MongoDB
+### ✅ Gestion des Candidatures
+- Ajout manuel via formulaire
+- Modification des détails et notes
+- Historique de suivi (date de candidature, etc.)
+- Suppression avec confirmation
 
-### ✅ Alertes email (structure)
-- Création d'alertes avec critères
-- Activation/désactivation
-- Fréquence quotidienne/hebdomadaire
-- **Note**: Envoi d'emails non actif (configuration requise)
+### ✅ Page de Détail
+- Vue complète d'une candidature
+- Notes personnelles éditables
+- Accès direct à l'offre originale
 
 ## APIs Backend
 
 | Endpoint | Méthode | Description |
 |----------|---------|-------------|
-| `/api/jobs` | GET | Recherche d'offres avec filtres |
-| `/api/jobs/{id}` | GET | Détail d'une offre |
-| `/api/favorites` | GET/POST | Liste/Ajout favoris |
-| `/api/favorites/{job_id}` | DELETE | Supprimer favori |
-| `/api/alerts` | GET/POST | Liste/Création alertes |
-| `/api/alerts/{id}` | DELETE | Supprimer alerte |
-| `/api/alerts/{id}/toggle` | PATCH | Activer/Désactiver alerte |
+| `/api/applications` | GET | Liste des candidatures (filtres: status, source, search) |
+| `/api/applications` | POST | Créer une candidature |
+| `/api/applications/{id}` | GET | Détail d'une candidature |
+| `/api/applications/{id}` | PUT | Modifier une candidature |
+| `/api/applications/{id}` | DELETE | Supprimer une candidature |
+| `/api/applications/{id}/status` | PATCH | Changer le statut |
 | `/api/stats` | GET | Statistiques dashboard |
+| `/api/alerts` | GET/POST | Alertes email |
 
-## Données Mock
-12 offres d'emploi variées (Développeur, DevOps, Designer, Data Scientist, etc.)
+## Installation Extension Chrome
+
+1. Télécharger `remotely-extension.zip` depuis le footer du site
+2. Extraire le ZIP
+3. Ouvrir `chrome://extensions/`
+4. Activer "Mode développeur"
+5. Cliquer "Charger l'extension non empaquetée"
+6. Sélectionner le dossier extrait
 
 ## Backlog (Fonctionnalités Futures)
 
 ### P0 - Prioritaire
-- [ ] Intégration API réelle (JSearch, Adzuna, Remotive)
 - [ ] Envoi d'emails pour les alertes (SendGrid/Resend)
+- [ ] Export CSV des candidatures
 
 ### P1 - Important
-- [ ] Pagination des résultats
-- [ ] Tri des offres (date, salaire)
-- [ ] Historique de recherche
+- [ ] Statistiques avancées (taux de réponse, temps moyen)
+- [ ] Rappels de relance automatiques
+- [ ] Tags personnalisés
 
 ### P2 - Nice to have
+- [ ] Intégration calendrier pour entretiens
 - [ ] Mode clair/sombre toggle
-- [ ] Export des favoris (CSV)
-- [ ] Statistiques personnelles
-- [ ] Notifications push navigateur
+- [ ] Synchronisation multi-appareils
 
 ## User Persona
-**Lucas** - Développeur freelance cherchant des missions 100% remote. Il veut un outil simple pour centraliser sa recherche d'emploi sans créer de compte sur plusieurs sites.
+**Lucas** - Développeur en recherche active d'emploi remote. Il consulte plusieurs sites d'emploi et veut centraliser toutes ses candidatures en un seul endroit pour suivre son avancement.
 
 ## Métriques de Succès
-- Temps de recherche d'offre < 5 secondes
-- Interface intuitive (0 friction)
-- Sauvegarde persistante des favoris
+- Capture d'offre < 3 secondes via extension
+- Vue d'ensemble complète du pipeline
+- Zéro candidature oubliée
