@@ -3,12 +3,14 @@ import sys
 import json
 from datetime import datetime
 
-class RemoteJobAPITester:
+class JobApplicationTrackerAPITester:
     def __init__(self, base_url="https://telework-finder.preview.emergentagent.com"):
         self.base_url = f"{base_url}/api"
         self.tests_run = 0
         self.tests_passed = 0
         self.failed_tests = []
+        self.created_applications = []
+        self.created_alerts = []
         
     def run_test(self, name, method, endpoint, expected_status, data=None, params=None):
         """Run a single API test"""
@@ -27,7 +29,9 @@ class RemoteJobAPITester:
             elif method == 'DELETE':
                 response = requests.delete(url, headers=headers)
             elif method == 'PATCH':
-                response = requests.patch(url, json=data, headers=headers)
+                response = requests.patch(url, headers=headers, params=params)
+            elif method == 'PUT':
+                response = requests.put(url, json=data, headers=headers)
                 
             success = response.status_code == expected_status
             
