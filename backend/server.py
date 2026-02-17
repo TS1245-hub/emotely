@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Query
+from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -110,6 +111,18 @@ class AlertCreate(BaseModel):
 @api_router.get("/")
 async def root():
     return {"message": "Remotely API - Suivi de candidatures télétravail"}
+
+@api_router.get("/download/extension")
+async def download_extension():
+    """Télécharger l'extension Chrome"""
+    file_path = ROOT_DIR / "static" / "remotely-extension.zip"
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Extension non trouvée")
+    return FileResponse(
+        path=file_path,
+        filename="remotely-extension.zip",
+        media_type="application/zip"
+    )
 
 # ============== JOB APPLICATIONS ==============
 
