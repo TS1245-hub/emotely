@@ -58,144 +58,138 @@ class JobApplicationTrackerAPITester:
         """Test root API endpoint"""
         return self.run_test("Root API", "GET", "", 200)
     
-    def test_jobs_listing(self):
-        """Test job listings without filters"""
-        success, data = self.run_test("Jobs Listing", "GET", "jobs", 200)
-        if success:
-            print(f"   Found {data.get('total', 0)} jobs")
-            if data.get('total', 0) >= 12:
-                print("   ✓ Has expected 12+ mock jobs")
-            else:
-                print(f"   ⚠ Expected 12 jobs, found {data.get('total', 0)}")
-        return success, data
-    
-    def test_jobs_search_react(self):
-        """Test job search with 'React' keyword"""
-        params = {"query": "React"}
-        success, data = self.run_test("Jobs Search - React", "GET", "jobs", 200, params=params)
-        if success:
-            jobs = data.get('jobs', [])
-            print(f"   Found {len(jobs)} React jobs")
-            # Verify results contain React-related jobs
-            react_found = any(
-                'react' in job.get('title', '').lower() or 
-                'react' in job.get('description', '').lower() or
-                any('react' in tag.lower() for tag in job.get('tags', []))
-                for job in jobs
-            )
-            if react_found:
-                print("   ✓ Contains React-related jobs")
-            else:
-                print("   ⚠ No React-related jobs found")
-        return success, data
-    
-    def test_jobs_filter_by_type(self):
-        """Test job filtering by type (CDI)"""
-        params = {"job_type": "CDI"}
-        success, data = self.run_test("Jobs Filter - CDI", "GET", "jobs", 200, params=params)
-        if success:
-            jobs = data.get('jobs', [])
-            print(f"   Found {len(jobs)} CDI jobs")
-            # Verify all results are CDI
-            all_cdi = all(job.get('job_type') == 'CDI' for job in jobs)
-            if all_cdi:
-                print("   ✓ All results are CDI jobs")
-            else:
-                print("   ⚠ Some results are not CDI jobs")
-        return success, data
-    
-    def test_jobs_filter_by_location(self):
-        """Test job filtering by location (France)"""
-        params = {"location": "France"}
-        success, data = self.run_test("Jobs Filter - France", "GET", "jobs", 200, params=params)
-        if success:
-            jobs = data.get('jobs', [])
-            print(f"   Found {len(jobs)} jobs in France")
-        return success, data
-    
-    def test_jobs_filter_by_salary(self):
-        """Test job filtering by minimum salary"""
-        params = {"salary_min": 50000}
-        success, data = self.run_test("Jobs Filter - Salary 50k+", "GET", "jobs", 200, params=params)
-        if success:
-            jobs = data.get('jobs', [])
-            print(f"   Found {len(jobs)} jobs with 50k+ salary")
-            # Verify salary filtering
-            valid_salaries = all(
-                job.get('salary_min', 0) >= 50000 
-                for job in jobs 
-                if job.get('salary_min')
-            )
-            if valid_salaries:
-                print("   ✓ All results meet salary requirement")
-        return success, data
-    
-    def test_get_job_detail(self):
-        """Test getting specific job details"""
-        # Use job ID "1" from mock data
-        success, data = self.run_test("Get Job Detail", "GET", "jobs/1", 200)
-        if success:
-            print(f"   Job: {data.get('title', 'Unknown')}")
-            print(f"   Company: {data.get('company', 'Unknown')}")
-        return success, data
-    
-    def test_get_job_not_found(self):
-        """Test getting non-existent job"""
-        return self.run_test("Get Job Not Found", "GET", "jobs/999", 404)
-    
-    def test_create_favorite(self):
-        """Test adding a job to favorites"""
-        favorite_data = {
-            "job_id": "test-job-1",
-            "job_title": "Test Developer",
-            "company": "Test Company",
-            "location": "France (Remote)",
-            "job_type": "CDI",
-            "salary_min": 45000,
-            "salary_max": 65000,
-            "apply_url": "https://example.com/apply"
-        }
-        success, data = self.run_test("Create Favorite", "POST", "favorites", 200, favorite_data)
-        if success:
-            print(f"   Created favorite with ID: {data.get('id')}")
-            # Store the favorite ID for cleanup
-            if hasattr(self, 'created_favorites'):
-                self.created_favorites.append(data.get('job_id'))
-            else:
-                self.created_favorites = [data.get('job_id')]
-        return success, data
-    
-    def test_get_favorites(self):
-        """Test getting all favorites"""
-        success, data = self.run_test("Get Favorites", "GET", "favorites", 200)
+    def test_get_applications(self):
+        """Test getting all applications"""
+        success, data = self.run_test("Get Applications", "GET", "applications", 200)
         if success and isinstance(data, list):
-            print(f"   Found {len(data)} favorites")
+            print(f"   Found {len(data)} applications")
+            # Check if we have test applications
+            if len(data) >= 3:
+                print("   ✓ Has expected test applications")
+            else:
+                print(f"   ⚠ Expected at least 3 test applications, found {len(data)}")
         return success, data
     
-    def test_delete_favorite(self):
-        """Test removing a job from favorites"""
-        # Delete the test favorite we created
-        job_id = "test-job-1"
-        return self.run_test("Delete Favorite", "DELETE", f"favorites/{job_id}", 200)
+    def test_get_applications_with_status_filter(self):
+        """Test filtering applications by status"""
+        params = {"status": "À postuler"}
+        success, data = self.run_test("Filter Applications by Status", "GET", "applications", 200, params=params)
+        if success and isinstance(data, list):
+            print(f"   Found {len(data)} applications with status 'À postuler'")
+            # Verify all results have correct status
+            all_correct_status = all(app.get('status') == 'À postuler' for app in data)
+            if all_correct_status:
+                print("   ✓ All results have correct status")
+            else:
+                print("   ⚠ Some results don't have correct status")
+        return success, data
+    
+    def test_get_applications_with_search(self):
+        """Test searching applications by title/company"""
+        params = {"search": "développeur"}
+        success, data = self.run_test("Search Applications", "GET", "applications", 200, params=params)
+        if success and isinstance(data, list):
+            print(f"   Found {len(data)} applications matching 'développeur'")
+        return success, data
+    
+    def test_create_application(self):
+        """Test creating a new job application"""
+        application_data = {
+            "title": "Développeur Full Stack Test",
+            "company": "TechCorp Test",
+            "url": f"https://example.com/job/{datetime.now().timestamp()}",
+            "location": "Paris, France (Remote)",
+            "job_type": "CDI",
+            "salary": "50-70k€",
+            "source": "manual",
+            "status": "À postuler",
+            "description": "Test job application for API testing",
+            "notes": "Application créée via test automatisé"
+        }
+        success, data = self.run_test("Create Application", "POST", "applications", 200, application_data)
+        if success:
+            print(f"   Created application with ID: {data.get('id')}")
+            if data.get('id'):
+                self.created_applications.append(data['id'])
+        return success, data
+    
+    def test_get_single_application(self):
+        """Test getting a single application by ID"""
+        if not self.created_applications:
+            print("⚠ No application ID available - skipping test")
+            return True, {}
+        
+        app_id = self.created_applications[0]
+        success, data = self.run_test("Get Single Application", "GET", f"applications/{app_id}", 200)
+        if success:
+            print(f"   Application: {data.get('title', 'Unknown')}")
+            print(f"   Company: {data.get('company', 'Unknown')}")
+            print(f"   Status: {data.get('status', 'Unknown')}")
+        return success, data
+    
+    def test_get_application_not_found(self):
+        """Test getting non-existent application"""
+        return self.run_test("Get Application Not Found", "GET", "applications/nonexistent-id", 404)
+    
+    def test_update_application_status(self):
+        """Test updating application status via PATCH"""
+        if not self.created_applications:
+            print("⚠ No application ID available - skipping test")
+            return True, {}
+        
+        app_id = self.created_applications[0]
+        params = {"status": "Postulé"}
+        success, data = self.run_test("Update Application Status", "PATCH", f"applications/{app_id}/status", 200, params=params)
+        if success:
+            print(f"   Status updated to: {data.get('status', 'Unknown')}")
+        return success, data
+    
+    def test_update_application_full(self):
+        """Test full application update via PUT"""
+        if not self.created_applications:
+            print("⚠ No application ID available - skipping test")
+            return True, {}
+        
+        app_id = self.created_applications[0]
+        update_data = {
+            "title": "Développeur Full Stack Updated",
+            "notes": "Notes mises à jour via test API"
+        }
+        success, data = self.run_test("Update Application Full", "PUT", f"applications/{app_id}", 200, update_data)
+        if success:
+            print(f"   Updated application: {data.get('title', 'Unknown')}")
+        return success, data
+    
+    def test_get_stats(self):
+        """Test getting dashboard statistics"""
+        success, data = self.run_test("Get Stats", "GET", "stats", 200)
+        if success:
+            print(f"   Total applications: {data.get('total', 0)}")
+            print(f"   Active applications: {data.get('active_applications', 0)}")
+            print(f"   Recent (7 days): {data.get('recent_7_days', 0)}")
+            # Check by_status breakdown
+            by_status = data.get('by_status', {})
+            if by_status:
+                print("   Status breakdown:")
+                for status, count in by_status.items():
+                    print(f"     {status}: {count}")
+        return success, data
     
     def test_create_alert(self):
         """Test creating an email alert"""
         alert_data = {
             "email": "test@example.com",
-            "keywords": "Python, FastAPI",
+            "keywords": "Python, React",
             "job_type": "CDI",
-            "location": "France",
+            "location": "Paris",
             "salary_min": 45000,
             "frequency": "daily"
         }
         success, data = self.run_test("Create Alert", "POST", "alerts", 200, alert_data)
         if success:
             print(f"   Created alert with ID: {data.get('id')}")
-            # Store the alert ID for cleanup
-            if hasattr(self, 'created_alerts'):
-                self.created_alerts.append(data.get('id'))
-            else:
-                self.created_alerts = [data.get('id')]
+            if data.get('id'):
+                self.created_alerts.append(data['id'])
         return success, data
     
     def test_get_alerts(self):
@@ -207,29 +201,40 @@ class JobApplicationTrackerAPITester:
     
     def test_toggle_alert(self):
         """Test toggling alert active status"""
-        if hasattr(self, 'created_alerts') and self.created_alerts:
-            alert_id = self.created_alerts[0]
-            return self.run_test("Toggle Alert", "PATCH", f"alerts/{alert_id}/toggle", 200)
-        else:
-            print("⚠ No alert to toggle - skipping test")
+        if not self.created_alerts:
+            print("⚠ No alert ID available - skipping test")
             return True, {}
+        
+        alert_id = self.created_alerts[0]
+        success, data = self.run_test("Toggle Alert", "PATCH", f"alerts/{alert_id}/toggle", 200)
+        if success:
+            print(f"   Alert active status: {data.get('is_active')}")
+        return success, data
+    
+    def test_delete_application(self):
+        """Test deleting an application"""
+        if not self.created_applications:
+            print("⚠ No application ID available - skipping test")
+            return True, {}
+        
+        app_id = self.created_applications[0]
+        success, data = self.run_test("Delete Application", "DELETE", f"applications/{app_id}", 200)
+        if success:
+            print("   Application deleted successfully")
+            self.created_applications.remove(app_id)
+        return success, data
     
     def test_delete_alert(self):
         """Test deleting an alert"""
-        if hasattr(self, 'created_alerts') and self.created_alerts:
-            alert_id = self.created_alerts[0]
-            return self.run_test("Delete Alert", "DELETE", f"alerts/{alert_id}", 200)
-        else:
-            print("⚠ No alert to delete - skipping test")
+        if not self.created_alerts:
+            print("⚠ No alert ID available - skipping test")
             return True, {}
-    
-    def test_stats_endpoint(self):
-        """Test getting dashboard statistics"""
-        success, data = self.run_test("Get Stats", "GET", "stats", 200)
+        
+        alert_id = self.created_alerts[0]
+        success, data = self.run_test("Delete Alert", "DELETE", f"alerts/{alert_id}", 200)
         if success:
-            print(f"   Total jobs: {data.get('total_jobs', 0)}")
-            print(f"   Favorites count: {data.get('favorites_count', 0)}")
-            print(f"   Active alerts: {data.get('active_alerts', 0)}")
+            print("   Alert deleted successfully")
+            self.created_alerts.remove(alert_id)
         return success, data
 
 def main():
