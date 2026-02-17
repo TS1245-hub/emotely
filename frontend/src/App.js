@@ -5,6 +5,7 @@ import DashboardPage from "./pages/DashboardPage";
 import KanbanPage from "./pages/KanbanPage";
 import AlertsPage from "./pages/AlertsPage";
 import ApplicationDetailPage from "./pages/ApplicationDetailPage";
+import ExtensionPage from "./pages/ExtensionPage";
 import "@/App.css";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route index element={<DashboardPage />} />
             <Route path="kanban" element={<KanbanPage />} />
             <Route path="alertes" element={<AlertsPage />} />
+            <Route path="extension" element={<ExtensionPage />} />
             <Route path="application/:id" element={<ApplicationDetailPage />} />
           </Route>
         </Routes>

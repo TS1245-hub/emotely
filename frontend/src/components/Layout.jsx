@@ -116,14 +116,13 @@ export default function Layout() {
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <a 
-                href="/remotely-extension.zip" 
-                download="remotely-extension.zip"
+              <NavLink
+                to="/extension"
                 className="flex items-center gap-2 text-xs text-zinc-500 hover:text-indigo-400 transition-colors"
               >
                 <Download className="w-3 h-3" />
                 Extension Chrome
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>
