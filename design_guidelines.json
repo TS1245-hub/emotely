@@ -1,0 +1,129 @@
+{
+  "identity": {
+    "name": "Remotely",
+    "persona": "The Phantom Headhunter",
+    "mission": "Zero friction remote job discovery. Dark mode only. Data-first. No fluff.",
+    "aesthetics": "Cyber-Minimalism. Think 'Linear' meets 'Blade Runner' but for HR.",
+    "principles": [
+      "Dark Mode Mandatory: Interface lives in the shadows (Zinc 950+).",
+      "Data Density: High density lists, expandable details. No massive whitespace for the sake of it.",
+      "Speed: Instant filtering, instant loading. The UI must feel 'snappy'.",
+      "Focus: The search bar is the protagonist. Everything else is supporting cast."
+    ]
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Manrope, sans-serif",
+      "body": "Inter, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl font-bold tracking-tight",
+      "h2": "text-3xl font-semibold tracking-tight",
+      "h3": "text-xl font-medium tracking-tight",
+      "body": "text-sm leading-relaxed text-zinc-400",
+      "body_lg": "text-base leading-relaxed text-zinc-300",
+      "mono": "text-xs font-mono tracking-wide text-zinc-500"
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": "#09090b",
+      "surface": "#18181b",
+      "surface_highlight": "#27272a",
+      "border": "#27272a",
+      "primary": "#6366f1",
+      "primary_hover": "#4f46e5",
+      "success": "#10b981",
+      "warning": "#f59e0b",
+      "error": "#ef4444",
+      "text_primary": "#fafafa",
+      "text_secondary": "#a1a1aa",
+      "text_muted": "#52525b"
+    },
+    "gradients": {
+      "glow": "radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 70%)",
+      "card_hover": "linear-gradient(180deg, rgba(39, 39, 42, 0.5) 0%, rgba(39, 39, 42, 0) 100%)"
+    }
+  },
+  "layout_strategy": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "grid_system": "Bento Grid Protocol - Mode B (High Density)",
+    "spacing": "Generous vertical rhythm (py-12, py-24), but tight component spacing (gap-4, gap-6).",
+    "z_index": {
+      "base": "z-0",
+      "overlay": "z-50",
+      "modal": "z-50",
+      "toast": "z-[100]"
+    }
+  },
+  "components": {
+    "SearchHero": {
+      "description": "Central command center. Large input, floating.",
+      "styles": "relative w-full max-w-2xl mx-auto mb-12",
+      "input_style": "h-14 pl-12 bg-zinc-900/50 border-zinc-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 rounded-xl transition-all shadow-lg backdrop-blur-sm text-lg",
+      "icon_style": "absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 w-5 h-5"
+    },
+    "JobCard": {
+      "description": "Horizontal data slate. Minimalist.",
+      "container": "group relative flex flex-col md:flex-row gap-6 p-6 rounded-xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-300",
+      "logo_area": "w-12 h-12 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 shrink-0",
+      "content_area": "flex-1 space-y-2",
+      "meta_tags": "flex flex-wrap gap-2 mt-3",
+      "tag_style": "px-2.5 py-0.5 rounded-full text-xs font-mono bg-zinc-800/50 text-zinc-400 border border-zinc-800"
+    },
+    "Filters": {
+      "description": "Sidebar or top bar filters.",
+      "container": "space-y-6 lg:w-64 shrink-0",
+      "section_title": "text-sm font-semibold text-zinc-200 mb-3",
+      "checkbox_style": "data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600 border-zinc-700 rounded-sm"
+    }
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-xl bg-black/40 border border-white/10",
+    "borders": "1px solid rgba(255,255,255,0.08)",
+    "shadows": "shadow-[0_8px_30px_rgb(0,0,0,0.12)]",
+    "selection": "::selection { background: #6366f1; color: #ffffff; }"
+  },
+  "motion": {
+    "library": "framer-motion",
+    "defaults": {
+      "duration": 0.2,
+      "ease": "easeInOut"
+    },
+    "list_stagger": {
+      "initial": { "opacity": 0, "y": 20 },
+      "animate": { "opacity": 1, "y": 0 },
+      "transition": { "duration": 0.3 }
+    }
+  },
+  "media": {
+    "image_urls": {
+      "hero_bg": "https://images.unsplash.com/photo-1760224255774-66b3ab88bd83?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMGRhcmslMjBncmFkaWVudCUyMHRlY2hub2xvZ3klMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc3MTMzNTUxMnww&ixlib=rb-4.1.0&q=85",
+      "empty_state": "https://images.unsplash.com/photo-1696087225391-eb97abf5ba20?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHw0fHxtaW5pbWFsaXN0JTIwZGFyayUyMGhvbWUlMjBvZmZpY2UlMjB3b3Jrc3BhY2UlMjBhZXN0aGV0aWN8ZW58MHx8fHwxNzcxMzM1NTExfDA&ixlib=rb-4.1.0&q=85"
+    },
+    "icons": "lucide-react"
+  },
+  "accessibility": {
+    "contrast": "Ensure text is Zinc-400 or lighter on Zinc-900 backgrounds.",
+    "focus_ring": "ring-2 ring-indigo-500 ring-offset-2 ring-offset-zinc-950",
+    "testing": "All interactive elements MUST have data-testid attributes (e.g., 'job-search-input', 'apply-button')."
+  },
+  "universal_guidelines": [
+    "Do not use generic centered layouts. Align left for data, center only for hero headlines.",
+    "Use 'sonner' for toasts.",
+    "Never use pure black (#000000). Use Zinc-950 (#09090b) for depth.",
+    "Inputs and Cards must have a subtle border (Zinc-800).",
+    "Active states must be obvious (border color change or text color shift).",
+    "Use skeleton loaders (Shadcn Skeleton) instead of spinners for content loading.",
+    "Language: FRENCH ONLY."
+  ],
+  "instructions_to_main_agent": [
+    "Install 'lucide-react', 'framer-motion', 'sonner' immediately.",
+    "Configure 'tailwind.config.js' to include the custom Zinc/Indigo palette if not present, but prefer using standard Tailwind colors (Zinc) to keep bundle small.",
+    "Create a 'Layout' component that enforces the dark theme background (min-h-screen bg-zinc-950 text-zinc-50).",
+    "Use 'Manrope' from Google Fonts (via @import in index.css).",
+    "Build the Search component as a reusable organism.",
+    "Mock API calls for now, but structure the service layer for future axios integration."
+  ]
+}
