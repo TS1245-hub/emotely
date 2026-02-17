@@ -1,0 +1,26 @@
+/* Content script styles */
+.remotely-overlay {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999999;
+}
+
+.remotely-button {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  transition: all 0.2s;
+}
+
+.remotely-button:hover {
+  background: #4f46e5;
+  transform: translateY(-2px);
+}
