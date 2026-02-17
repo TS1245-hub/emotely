@@ -238,40 +238,39 @@ class JobApplicationTrackerAPITester:
         return success, data
 
 def main():
-    print("🚀 Starting Remote Job Search API Tests")
+    print("🚀 Starting Job Application Tracker API Tests")
     print("=" * 50)
     
     # Initialize tester
-    tester = RemoteJobAPITester()
+    tester = JobApplicationTrackerAPITester()
     
     # Run all tests in sequence
     print("\n📋 BASIC TESTS")
     tester.test_root_endpoint()
     
-    print("\n📋 JOB LISTING & SEARCH TESTS")
-    tester.test_jobs_listing()
-    tester.test_jobs_search_react()
-    tester.test_jobs_filter_by_type()
-    tester.test_jobs_filter_by_location()
-    tester.test_jobs_filter_by_salary()
+    print("\n📋 APPLICATION LISTING & FILTERING TESTS")
+    tester.test_get_applications()
+    tester.test_get_applications_with_status_filter()
+    tester.test_get_applications_with_search()
     
-    print("\n📋 JOB DETAIL TESTS")
-    tester.test_get_job_detail()
-    tester.test_get_job_not_found()
+    print("\n📋 APPLICATION CRUD TESTS")
+    tester.test_create_application()
+    tester.test_get_single_application()
+    tester.test_get_application_not_found()
+    tester.test_update_application_status()
+    tester.test_update_application_full()
     
-    print("\n📋 FAVORITES TESTS")
-    tester.test_create_favorite()
-    tester.test_get_favorites()
-    tester.test_delete_favorite()
+    print("\n📋 STATS TESTS")
+    tester.test_get_stats()
     
     print("\n📋 ALERTS TESTS")
     tester.test_create_alert()
     tester.test_get_alerts()
     tester.test_toggle_alert()
-    tester.test_delete_alert()
     
-    print("\n📋 STATS TESTS")
-    tester.test_stats_endpoint()
+    print("\n📋 CLEANUP TESTS")
+    tester.test_delete_application()
+    tester.test_delete_alert()
     
     # Print summary
     print("\n" + "=" * 50)
