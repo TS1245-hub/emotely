@@ -1,34 +1,80 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* App-specific styles */
+
+/* Search input glow effect */
+.search-input:focus {
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2), 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+/* Job card hover effect */
+.job-card {
+    transition: all 0.3s ease;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.job-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
-.App-link {
-    color: #61dafb;
+/* Tag styles */
+.tag {
+    @apply px-2.5 py-0.5 rounded-full text-xs font-mono bg-zinc-800/50 text-zinc-400 border border-zinc-800;
+    transition: all 0.2s ease;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.tag:hover {
+    @apply bg-zinc-700/50 text-zinc-300;
+}
+
+/* Filter section */
+.filter-section {
+    @apply space-y-3;
+}
+
+.filter-title {
+    @apply text-sm font-semibold text-zinc-200 mb-3;
+}
+
+/* Button variants */
+.btn-primary {
+    @apply bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg transition-all;
+}
+
+.btn-secondary {
+    @apply bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-medium px-4 py-2 rounded-lg transition-all border border-zinc-700;
+}
+
+.btn-ghost {
+    @apply hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 font-medium px-4 py-2 rounded-lg transition-all;
+}
+
+/* Navigation active state */
+.nav-link {
+    @apply text-zinc-400 hover:text-zinc-200 transition-colors;
+}
+
+.nav-link.active {
+    @apply text-indigo-400;
+}
+
+/* Empty state */
+.empty-state {
+    @apply flex flex-col items-center justify-center py-16 text-center;
+}
+
+/* Stat card */
+.stat-card {
+    @apply p-6 rounded-xl bg-zinc-900/40 border border-zinc-800;
+}
+
+/* Dialog overlay */
+.dialog-overlay {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+/* Toast customization */
+[data-sonner-toaster] {
+    --normal-bg: #18181b;
+    --normal-border: #27272a;
+    --normal-text: #fafafa;
 }
