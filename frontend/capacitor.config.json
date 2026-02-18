@@ -4,7 +4,7 @@
   "webDir": "build",
   "server": {
     "androidScheme": "https",
-    "url": "https://telework-finder.preview.emergentagent.com",
+    "url": "https://remote-job-tracker.preview.emergentagent.com",
     "cleartext": true
   },
   "plugins": {

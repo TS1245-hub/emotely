@@ -1,6 +1,6 @@
 // Configuration - À MODIFIER avec votre URL de dashboard
-const API_BASE_URL = 'https://telework-finder.preview.emergentagent.com/api';
-const DASHBOARD_URL = 'https://telework-finder.preview.emergentagent.com';
+const API_BASE_URL = 'https://remote-job-tracker.preview.emergentagent.com/api';
+const DASHBOARD_URL = 'https://remote-job-tracker.preview.emergentagent.com';
 
 // DOM Elements
 const elements = {

@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 class JobApplicationTrackerAPITester:
-    def __init__(self, base_url="https://telework-finder.preview.emergentagent.com"):
+    def __init__(self, base_url="https://remote-job-tracker.preview.emergentagent.com"):
         self.base_url = f"{base_url}/api"
         self.tests_run = 0
         self.tests_passed = 0

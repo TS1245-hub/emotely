@@ -33,7 +33,7 @@ jobs:
       - name: Build React app
         run: yarn build
         env:
-          REACT_APP_BACKEND_URL: https://telework-finder.preview.emergentagent.com
+          REACT_APP_BACKEND_URL: https://remote-job-tracker.preview.emergentagent.com
 
       - name: Sync Capacitor
         run: npx cap sync android
