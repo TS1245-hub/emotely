@@ -76,9 +76,9 @@ export default function ApplicationDetailPage() {
 
   useEffect(() => {
     fetchApplication();
-  }, [id]);
+  }, [id, fetchApplication]);
 
-  const fetchApplication = async () => {
+  const fetchApplication = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(`${API}/applications/${id}`);
