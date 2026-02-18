@@ -6,6 +6,7 @@ import KanbanPage from "./pages/KanbanPage";
 import AlertsPage from "./pages/AlertsPage";
 import ApplicationDetailPage from "./pages/ApplicationDetailPage";
 import ExtensionPage from "./pages/ExtensionPage";
+import SharePage from "./pages/SharePage";
 import "@/App.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="kanban" element={<KanbanPage />} />
             <Route path="alertes" element={<AlertsPage />} />
             <Route path="extension" element={<ExtensionPage />} />
+            <Route path="share" element={<SharePage />} />
             <Route path="application/:id" element={<ApplicationDetailPage />} />
           </Route>
         </Routes>
