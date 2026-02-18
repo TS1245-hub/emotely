@@ -91,7 +91,7 @@ export default function ApplicationDetailPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id, navigate]);
 
   const handleStatusChange = async (newStatus) => {
     try {
