@@ -1,0 +1,18 @@
+{
+  "appId": "com.remotely.jobtracker",
+  "appName": "Remotely",
+  "webDir": "build",
+  "server": {
+    "androidScheme": "https",
+    "url": "https://telework-finder.preview.emergentagent.com",
+    "cleartext": true
+  },
+  "plugins": {
+    "App": {
+      "launchShowDuration": 0
+    }
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}
